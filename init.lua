@@ -6,7 +6,13 @@ vim.o.shiftwidth = 2
 vim.o.swapfile = false
 vim.o.clipboard = "unnamedplus"
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true })
+vim.keymap.set("v", "<Space>", "<Nop>", { silent = true })
+
+vim.o.timeout = true
+vim.o.timeoutlen = 1000
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':q<CR>')
