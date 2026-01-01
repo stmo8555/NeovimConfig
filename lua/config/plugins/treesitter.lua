@@ -5,7 +5,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
     require("nvim-treesitter.configs").setup({
-      ensure_installed = {"c", "cpp", "python", "lua", "vim", "bash", "regex", "markdown" },
+      ensure_instlinelled = {"html", "css", "c", "cpp", "python", "lua", "vim", "bash", "regex", "markdown" },
       highlight = { enable = true },
       indent = { enable = true },
     })
