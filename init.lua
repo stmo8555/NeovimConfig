@@ -11,33 +11,23 @@ vim.g.maplocalleader = " "
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("v", "<Space>", "<Nop>", { silent = true })
 
-vim.o.timeout = true
-vim.o.timeoutlen = 1000
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':q<CR>')
 vim.keymap.set('n', '<leader>qa', ':qa<CR>')
 vim.keymap.set('i', 'jj', '<Esc>', {noremap = true, silent = true})
 
-require "config.lazy"
-require "mini.statusline".setup({use_icons = true})
-require "mini.pick".setup()
-require "mini.git".setup()
-require "oil".setup()
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("basedpyright")
 
-vim.cmd("colorscheme vague")
+require "plugins.vague"
+require "plugins.oil"
+require "plugins.mini"
+require "plugins.treesitter"
+require "plugins.mason"
+require "plugins.lsp"
 
 
 
 vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>')
 vim.keymap.set('n', '<leader>e', ':Oil<CR>')
-vim.keymap.set('n', '<leader>gs', ':Git status<CR>')
-vim.keymap.set('n', '<leader>ga', ':Git add')
-vim.keymap.set('n', '<leader>ga.', ':Git add .<CR>')
-vim.keymap.set('n', '<leader>gc', ':Git commit<CR>')
-vim.keymap.set('n', '<leader>gp', ':Git push<CR>')
-
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)

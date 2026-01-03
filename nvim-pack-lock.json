@@ -1,0 +1,33 @@
+{
+  "plugins": {
+    "mason-lspconfig.nvim": {
+      "rev": "4cfe411526a7a99c18281135e8b4765ae6330d15",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim.git"
+    },
+    "mason.nvim": {
+      "rev": "57e5a8addb8c71fb063ee4acda466c7cf6ad2800",
+      "src": "https://github.com/mason-org/mason.nvim.git"
+    },
+    "mini.nvim": {
+      "rev": "2809a06d24fe528c572c7ceca4f0a82fecb02ea8",
+      "src": "https://github.com/nvim-mini/mini.nvim.git"
+    },
+    "nvim-lspconfig": {
+      "rev": "ac04ec3c2af08e9821b4eb64ede86072b9b213bf",
+      "src": "https://github.com/neovim/nvim-lspconfig.git"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba918343ebfd5565147a42a26580579482",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'master'"
+    },
+    "oil.nvim": {
+      "rev": "81b8a91735ad5cd24a6b3137f14a89f19176364f",
+      "src": "https://github.com/stevearc/oil.nvim.git"
+    },
+    "vague.nvim": {
+      "rev": "fcc283576764474ccfbbcca240797d5d7f4d8a78",
+      "src": "https://github.com/vague-theme/vague.nvim.git"
+    }
+  }
+}
