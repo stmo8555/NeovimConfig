@@ -1,4 +1,17 @@
-vim.pack.add({"https://github.com/neovim/nvim-lspconfig.git"})
+vim.pack.add({
+  "https://github.com/neovim/nvim-lspconfig.git",
+  "https://github.com/mason-org/mason.nvim.git",
+  "https://github.com/mason-org/mason-lspconfig.nvim.git"
+})
 
---vim.lsp.enable("lua_ls")
---vim.lsp.enable("basedpyright")
+require "mason".setup({
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
+    }
+})
+
+require("mason-lspconfig").setup()
