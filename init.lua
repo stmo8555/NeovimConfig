@@ -31,3 +31,9 @@ vim.keymap.set('n', '<leader>f', ':Pick files<CR>', { noremap = true, silent = t
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>e', ':Oil<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
