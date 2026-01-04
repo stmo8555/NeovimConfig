@@ -10,6 +10,7 @@ vim.o.clipboard = 'unnamedplus'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+
 vim.keymap.set('n', '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('v', '<Space>', '<Nop>', { silent = true })
 
