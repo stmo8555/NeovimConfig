@@ -4,12 +4,11 @@ vim.pack.add({
 
 require 'blink.cmp'.setup({
 
- build = 'cargo build --release',
+-- build = 'cargo build --release',
+ fuzzy = { implementation = "lua" },
 
  keymap = { preset = 'default' },
  appearance = {
-  -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-  -- Adjusts spacing to ensure icons are aligned
   use_nvim_cmp_as_default = false,
   nerd_font_variant = 'mono'
  },

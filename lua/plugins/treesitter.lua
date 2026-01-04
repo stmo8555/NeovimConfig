@@ -9,7 +9,7 @@ require "nvim-treesitter.configs".setup({
   ensure_installed = {
     "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
-    "regex", "markdown", "json"
+    "regex", "markdown", "json", "go"
   },
   auto_install = false,
   highlight = {

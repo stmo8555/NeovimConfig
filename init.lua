@@ -26,6 +26,7 @@ require 'plugins.oil'
 require 'plugins.mini'
 require 'plugins.treesitter'
 require 'plugins.lsp'
+require 'plugins.blink-cmp'
 
 vim.keymap.set('n', '<leader>f', ':Pick files<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>', { noremap = true, silent = true })
