@@ -28,10 +28,12 @@ require 'plugins.mini'
 require 'plugins.treesitter'
 require 'plugins.lsp'
 require 'plugins.blink-cmp'
+require 'plugins.multicursor'
 
 vim.keymap.set('n', '<leader>f', ':Pick files<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>e', ':Oil<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config')) end, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 
 vim.api.nvim_create_autocmd('TextYankPost', {
