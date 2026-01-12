@@ -9,6 +9,10 @@
       "rev": "d1e7c7c45d45c6b6a25427bf62db4db73b03ff3d",
       "src": "https://github.com/saghen/blink.nvim.git"
     },
+    "marks.nvim": {
+      "rev": "f353e8c08c50f39e99a9ed474172df7eddd89b72",
+      "src": "https://github.com/chentoast/marks.nvim"
+    },
     "mason-lspconfig.nvim": {
       "rev": "4cfe411526a7a99c18281135e8b4765ae6330d15",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim.git"
@@ -49,6 +53,10 @@
     "vague.nvim": {
       "rev": "fcc283576764474ccfbbcca240797d5d7f4d8a78",
       "src": "https://github.com/vague-theme/vague.nvim.git"
+    },
+    "winshift.nvim": {
+      "rev": "37468ed6f385dfb50402368669766504c0e15583",
+      "src": "https://github.com/sindrets/winshift.nvim"
     }
   }
 }
