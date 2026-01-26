@@ -35,9 +35,10 @@ auto('TextYankPost', {
 auto('FileType', {
   group = vim.api.nvim_create_augroup('no_auto_comment', {}),
   callback = function()
-    vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
-  end,
+  vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+end,
 })
+
 
 auto('VimResized', { command = 'wincmd =' })
 auto('FileType', { pattern='help', command='wincmd L',})
@@ -71,6 +72,7 @@ require('plugins.blink-cmp')
 require('plugins.autopair')
 require('plugins.winshift')
 require('plugins.marks')
+require('plugins.autotag')
 
 set('n', '<leader>f', ':Pick files<CR>', opts)
 set('n', '<leader>h', ':Pick help<CR>', opts)
