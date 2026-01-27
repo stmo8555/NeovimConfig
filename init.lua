@@ -46,7 +46,10 @@ auto('FileType', { pattern='help', command='wincmd L',})
 
 local opts = { noremap = true, silent = true }
 local set = vim.keymap.set
+
 set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+set("n", "<C-j>", function() vim.fn.append(vim.fn.line("."), "") end)
+set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 
 -- Diagnostic keymaps improve
 set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
