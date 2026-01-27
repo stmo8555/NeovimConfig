@@ -62,6 +62,9 @@ set('n', '<leader>qq', ':qa!<CR>', opts)
 set('i', 'jj', '<Esc>', opts)
 set('n', '<C-q>', '@q', opts)
 
+set('n', '<C-Left>', ':vertical resize -5<CR>', { silent = true })
+set('n', '<C-Right>', ':vertical resize +5<CR>', { silent = true })
+
 require('plugins.vague')
 require('plugins.oil')
 require('plugins.mini')
