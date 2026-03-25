@@ -6,8 +6,8 @@ vim.o.number = true
 vim.o.signcolumn = 'yes'
 vim.o.relativenumber = true
 vim.o.wrap = false
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.swapfile = false
 vim.o.scrolloff = 8
@@ -68,6 +68,7 @@ set('n', '<leader>q', ':q<CR>', opts)
 set('i', 'jj', '<Esc>', opts)
 set('n', '<C-q>', '@q', opts)
 
+set({'n', 'v', 'x'}, 'D', '"_d', opts)
 set('n', '<C-Left>', ':vertical resize -5<CR>', { silent = true })
 set('n', '<C-Right>', ':vertical resize +5<CR>', { silent = true })
 
