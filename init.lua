@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
-
+vim.o.winborder = "rounded"
 vim.o.number = true
 vim.o.signcolumn = 'yes'
 vim.o.relativenumber = true
@@ -10,6 +10,9 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 vim.o.swapfile = false
+vim.o.scrolloff = 8
+vim.o.sidescrolloff = 8
+vim.o.cursorline = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
@@ -51,6 +54,8 @@ set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 set("n", "<C-j>", function() vim.fn.append(vim.fn.line("."), "") end)
 set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 
+--Void delete
+set({'n', 'x', 'v'}, 'D', '\"_d', opts)
 -- Diagnostic keymaps improve
 set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -60,8 +65,6 @@ set('v', '<Space>', '<Nop>', opts)
 set('n', '<leader>o', ':update<CR> :source<CR>', opts)
 set('n', '<leader>w', ':write<CR>', opts)
 set('n', '<leader>q', ':q<CR>', opts)
-set('n', '<leader>qa', ':qa<CR>', opts)
-set('n', '<leader>qq', ':qa!<CR>', opts)
 set('i', 'jj', '<Esc>', opts)
 set('n', '<C-q>', '@q', opts)
 
@@ -79,12 +82,11 @@ require('plugins.autopair')
 require('plugins.winshift')
 require('plugins.marks')
 require('plugins.autotag')
+require('plugins.aerial')
 
-set('n', '<leader>f', ':Pick files<CR>', opts)
-set('n', '<leader>h', ':Pick help<CR>', opts)
-set("n", "<leader>fn",
-  function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end,
-  { desc = "Pick files from Neovim config" })
+set('n', '<leader>ff', ':Pick files<CR>', opts)
+set('n', '<leader>fh', ':Pick help<CR>', opts)
+set("n", "<leader>fn", function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end, { desc = "Pick files from Neovim config" })
 set('n', '<leader>e', ':Oil<CR>', opts)
 set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config') .. '/lua/plugins') end, opts)
 set('n', '<leader>lf', vim.lsp.buf.format)
