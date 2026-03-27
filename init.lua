@@ -50,14 +50,17 @@ auto('FileType', { pattern='help', command='wincmd L',})
 local opts = { noremap = true, silent = true }
 local set = vim.keymap.set
 
+-- Disable Ctrl+u in insert mode
+set('i', '<C-u>', '<Nop>', { noremap = true, silent = true })
 set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 set("n", "<C-j>", function() vim.fn.append(vim.fn.line("."), "") end)
 set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 
 --Void delete
 set({'n', 'x', 'v'}, 'D', '\"_d', opts)
+
 -- Diagnostic keymaps improve
-set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+set('n', '<leader>d', vim.diagnostic.setloclist, opts)
 
 set('n', '<Space>', '<Nop>', opts)
 set('v', '<Space>', '<Nop>', opts)
@@ -87,6 +90,7 @@ require('plugins.aerial')
 
 set('n', '<leader>ff', ':Pick files<CR>', opts)
 set('n', '<leader>fh', ':Pick help<CR>', opts)
+set('n', '<leader>fg', ':Pick grep_live<CR>', opts)
 set("n", "<leader>fn", function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end, { desc = "Pick files from Neovim config" })
 set('n', '<leader>e', ':Oil<CR>', opts)
 set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config') .. '/lua/plugins') end, opts)
