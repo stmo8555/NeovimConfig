@@ -92,7 +92,7 @@ set('n', '<leader>ff', ':Pick files<CR>', opts)
 set('n', '<leader>fh', ':Pick help<CR>', opts)
 set('n', '<leader>fg', ':Pick grep_live<CR>', opts)
 set("n", "<leader>fn", function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end, { desc = "Pick files from Neovim config" })
-set('n', '<leader>e', ':Oil<CR>', opts)
+set('n', '<leader>ee', ':Oil<CR>', opts)
 set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config') .. '/lua/plugins') end, opts)
 set('n', '<leader>lf', vim.lsp.buf.format)
 
