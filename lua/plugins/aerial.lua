@@ -1,4 +1,5 @@
 vim.pack.add({ { src = "https://github.com/stevearc/aerial.nvim" } })
+
 require("aerial").setup({
     -- optionally use on_attach to set keymaps when aerial has attached to a buffer
     close_on_select = true,
