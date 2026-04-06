@@ -28,23 +28,23 @@ vim.o.confirm = true
 local auto = vim.api.nvim_create_autocmd
 
 auto('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.hl.on_yank()
+    end,
 })
 
 auto('FileType', {
-  group = vim.api.nvim_create_augroup('no_auto_comment', {}),
-  callback = function()
-  vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
-end,
+    group = vim.api.nvim_create_augroup('no_auto_comment', {}),
+    callback = function()
+        vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+    end,
 })
 
 
 auto('VimResized', { command = 'wincmd =' })
-auto('FileType', { pattern='help', command='wincmd L',})
+auto('FileType', { pattern = 'help', command = 'wincmd L', })
 
 
 local opts = { noremap = true, silent = true }
@@ -57,7 +57,7 @@ set("n", "<C-j>", function() vim.fn.append(vim.fn.line("."), "") end)
 set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 
 --Void delete
-set({'n', 'x', 'v'}, 'D', '\"_d', opts)
+set({ 'n', 'x', 'v' }, 'D', '\"_d', opts)
 
 -- Diagnostic keymaps improve
 set('n', '<leader>d', vim.diagnostic.setloclist, opts)
@@ -71,7 +71,7 @@ set('n', '<leader>q', ':q<CR>', opts)
 set('i', 'jj', '<Esc>', opts)
 set('n', '<C-q>', '@q', opts)
 
-set({'n', 'v', 'x'}, 'D', '"_d', opts)
+set({ 'n', 'v', 'x' }, 'D', '"_d', opts)
 set('n', '<C-Left>', ':vertical resize -5<CR>', { silent = true })
 set('n', '<C-Right>', ':vertical resize +5<CR>', { silent = true })
 
@@ -81,7 +81,6 @@ require('plugins.mini')
 require('plugins.treesitter')
 require('plugins.lsp')
 require('plugins.blink-cmp')
---require('plugins.multicursor')
 require('plugins.autopair')
 require('plugins.winshift')
 require('plugins.marks')
@@ -91,7 +90,9 @@ require('plugins.aerial')
 set('n', '<leader>ff', ':Pick files<CR>', opts)
 set('n', '<leader>fh', ':Pick help<CR>', opts)
 set('n', '<leader>fg', ':Pick grep_live<CR>', opts)
-set("n", "<leader>fn", function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end, { desc = "Pick files from Neovim config" })
+set("n", "<leader>fn",
+    function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end,
+    { desc = "Pick files from Neovim config" })
 set('n', '<leader>ee', ':Oil<CR>', opts)
 set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config') .. '/lua/plugins') end, opts)
 set('n', '<leader>lf', vim.lsp.buf.format)

@@ -5,7 +5,7 @@ vim.pack.add({
 require 'blink.cmp'.setup({
 
 -- build = 'cargo build --release',
- fuzzy = { implementation = "lua" },
+ fuzzy = { implementation = "prefer_rust_with_warning" },
 
  keymap = { preset = 'default' },
  appearance = {
