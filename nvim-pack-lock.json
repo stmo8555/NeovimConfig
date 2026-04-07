@@ -50,6 +50,10 @@
       "rev": "520a7bec9642fe37e4b161c3b1864b35bc15d811",
       "src": "https://github.com/vague-theme/vague.nvim"
     },
+    "vim-peekaboo": {
+      "rev": "2a8a3187ba6b15201b2563a3f0331fcdf49da36c",
+      "src": "https://github.com/junegunn/vim-peekaboo"
+    },
     "winshift.nvim": {
       "rev": "37468ed6f385dfb50402368669766504c0e15583",
       "src": "https://github.com/sindrets/winshift.nvim"

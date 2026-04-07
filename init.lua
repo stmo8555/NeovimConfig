@@ -87,6 +87,8 @@ require('plugins.marks')
 require('plugins.autotag')
 require('plugins.aerial')
 
+vim.pack.add({"https://github.com/junegunn/vim-peekaboo"})
+
 set('n', '<leader>ff', ':Pick files<CR>', opts)
 set('n', '<leader>fh', ':Pick help<CR>', opts)
 set('n', '<leader>fg', ':Pick grep_live<CR>', opts)
