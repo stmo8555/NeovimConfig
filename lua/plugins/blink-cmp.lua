@@ -1,17 +1,12 @@
-vim.pack.add({
- { src = 'https://github.com/saghen/blink.cmp', version = 'v1.8.0' }
-})
+vim.pack.add({ 'https://github.com/saghen/blink.cmp'})
 
 require 'blink.cmp'.setup({
+    fuzzy = { implementation = "prefer_rust_with_warning" },
 
--- build = 'cargo build --release',
- fuzzy = { implementation = "prefer_rust_with_warning" },
-
- keymap = { preset = 'default' },
- appearance = {
-  use_nvim_cmp_as_default = false,
-  nerd_font_variant = 'mono'
- },
- signature = { enabled = true}
+    keymap = { preset = 'default' },
+    appearance = {
+        use_nvim_cmp_as_default = false,
+        nerd_font_variant = 'mono'
+    },
+    signature = { enabled = true }
 })
-

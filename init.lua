@@ -57,7 +57,7 @@ set("n", "<C-j>", function() vim.fn.append(vim.fn.line("."), "") end)
 set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 
 --Void delete
-set({ 'n', 'x', 'v' }, 'D', '\"_d', opts)
+set({ 'o', 'v' }, 'D', '\"_d', opts)
 
 -- Diagnostic keymaps improve
 set('n', '<leader>d', vim.diagnostic.setloclist, opts)
@@ -65,7 +65,7 @@ set('n', '<leader>d', vim.diagnostic.setloclist, opts)
 set('n', '<Space>', '<Nop>', opts)
 set('v', '<Space>', '<Nop>', opts)
 
-set('n', '<leader>o', ':update<CR> :source<CR>', opts)
+set('n', '<leader>o', ':update<CR> :source<CR>', nil)
 set('n', '<leader>w', ':write<CR>', opts)
 set('n', '<leader>q', ':q<CR>', opts)
 set('i', 'jj', '<Esc>', opts)
@@ -78,7 +78,6 @@ set('n', '<C-Right>', ':vertical resize +5<CR>', { silent = true })
 require('plugins.vague')
 require('plugins.oil')
 require('plugins.mini')
-require('plugins.treesitter')
 require('plugins.lsp')
 require('plugins.blink-cmp')
 require('plugins.autopair')
@@ -86,8 +85,7 @@ require('plugins.winshift')
 require('plugins.marks')
 require('plugins.autotag')
 require('plugins.aerial')
-
-vim.pack.add({"https://github.com/junegunn/vim-peekaboo"})
+vim.pack.add({ "https://github.com/junegunn/vim-peekaboo" })
 
 set('n', '<leader>ff', ':Pick files<CR>', opts)
 set('n', '<leader>fh', ':Pick help<CR>', opts)
@@ -95,6 +93,9 @@ set('n', '<leader>fg', ':Pick grep_live<CR>', opts)
 set("n", "<leader>fn",
     function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end,
     { desc = "Pick files from Neovim config" })
+set("n", "<leader>fl",
+    function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.expand('%:p:h') }, }) end,
+    { desc = "Pick files locally" })
 set('n', '<leader>ee', ':Oil<CR>', opts)
 set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config') .. '/lua/plugins') end, opts)
 set('n', '<leader>lf', vim.lsp.buf.format)
