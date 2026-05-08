@@ -59,9 +59,6 @@ set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 --Void delete
 set({ 'o', 'v' }, 'D', '\"_d', opts)
 
--- Diagnostic keymaps improve
-set('n', '<leader>d', vim.diagnostic.setloclist, opts)
-
 set('n', '<Space>', '<Nop>', opts)
 set('v', '<Space>', '<Nop>', opts)
 
@@ -85,6 +82,8 @@ require('plugins.winshift')
 require('plugins.marks')
 require('plugins.autotag')
 require('plugins.aerial')
+require('plugins.dap')
+
 vim.pack.add({ "https://github.com/junegunn/vim-peekaboo" })
 
 set('n', '<leader>ff', ':Pick files<CR>', opts)
@@ -96,8 +95,9 @@ set("n", "<leader>fn",
 set("n", "<leader>fl",
     function() require('mini.pick').builtin.files({}, { source = { cwd = vim.fn.expand('%:p:h') }, }) end,
     { desc = "Pick files locally" })
-set('n', '<leader>ee', ':Oil<CR>', opts)
-set('n', '<leader>en', function() require('oil').open(vim.fn.stdpath('config') .. '/lua/plugins') end, opts)
+
+set('n', '<leader>e', ':Oil<CR>', opts)
+
 set('n', '<leader>lf', vim.lsp.buf.format)
 
 --" Start Win-Move mode:
