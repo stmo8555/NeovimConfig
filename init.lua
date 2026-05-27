@@ -85,6 +85,7 @@ require('plugins.aerial')
 require('plugins.dap')
 
 vim.pack.add({ "https://github.com/junegunn/vim-peekaboo" })
+vim.keymap.set("n", "grn", function() require("plugins.rename_float").rename() end, { desc = "LSP rename float" })
 
 set('n', '<leader>ff', ':Pick files<CR>', opts)
 set('n', '<leader>fh', ':Pick help<CR>', opts)

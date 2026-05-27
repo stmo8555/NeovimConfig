@@ -17,22 +17,10 @@ packadd("mason.nvim")
 packadd("mason-lspconfig.nvim")
 packadd("nvim-lspconfig")
 
-
-
-
-require "nvim-treesitter".setup({
-    ensure_installed = {
-        "html", "css", "c", "cpp",
-        "python", "lua", "vim", "bash",
-        "regex", "markdown", "json", "go", "javascript", "sql"
-    },
-    auto_install = false,
-    highlight = {
-        enable = true,
-    },
-    indent = {
-        enable = true,
-    },
+require "nvim-treesitter".install({
+    "html", "css", "c", "cpp",
+    "python", "lua", "vim", "bash",
+    "regex", "markdown", "json", "go", "javascript", "sql"
 })
 
 require "mason".setup({

@@ -34,9 +34,3 @@ vim.keymap.set("n", "<leader>de", function()
         source = true,
     })
 end, { desc = "Show diagnostic details" })
-
-vim.keymap.set("n", "<leader>dl", function()
-  vim.diagnostic.config({
-    virtual_lines = not vim.diagnostic.config().virtual_lines,
-  })
-end, { desc = "Toggle diagnostic lines" })
