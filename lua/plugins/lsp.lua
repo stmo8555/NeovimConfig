@@ -1,21 +1,12 @@
 vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig.git",
     "https://github.com/mason-org/mason.nvim.git",
-    "https://github.com/mason-org/mason-lspconfig.nvim.git",
     {
         src = "https://github.com/nvim-treesitter/nvim-treesitter",
         version = "main"
     },
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 })
-
-local function packadd(name)
-    vim.cmd("packadd " .. name)
-end
-packadd("nvim-treesitter")
-packadd("mason.nvim")
-packadd("mason-lspconfig.nvim")
-packadd("nvim-lspconfig")
 
 require "nvim-treesitter".install({
     "html", "css", "c", "cpp",
@@ -33,17 +24,33 @@ require "mason".setup({
     }
 })
 
-require("mason-lspconfig").setup()
+vim.lsp.config("cssls", {})
+vim.lsp.config("html", {})
+vim.lsp.config("gopls", {})
+vim.lsp.config("lua_ls", {})
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "*" },
-    callback = function(args)
-        local ft = vim.bo[args.buf].filetype
-        local lang = vim.treesitter.language.get_lang(ft)
-        if vim.treesitter.language.add(lang) then
-            vim.treesitter.start(args.buf, lang)
-        end
+vim.lsp.config("postgres_lsp", {
+    cmd = { "postgres-language-server", "lsp-proxy" },
+    filetypes = { "sql" },
+    root_dir = function(_, on_dir)
+        on_dir(vim.fn.getcwd())
     end,
+})
+
+vim.lsp.config("tsgo", {})
+
+vim.lsp.enable({
+    "cssls",
+    "html",
+    "gopls",
+    "lua_ls",
+    "postgres_lsp",
+    "tsgo",
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { '<filetype>' },
+    callback = function() vim.treesitter.start() end,
 })
 
 -- keymaps
@@ -51,6 +58,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.keymap.set({ "x", "o" }, "af", function()
     require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
 end)
+
 vim.keymap.set({ "x", "o" }, "if", function()
     require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
 end)
