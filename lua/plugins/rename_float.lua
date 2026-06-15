@@ -34,6 +34,7 @@ function M.rename()
     vim.keymap.set("n", "q", close, { buffer = buf, silent = true })
     vim.keymap.set("n", "<Esc>", close, { buffer = buf, silent = true })
     vim.keymap.set("n", "<CR>", "<cmd>write<CR>", { buffer = buf, silent = true })
+    vim.keymap.set("i", "<CR>", "<Nop>", { buffer = buf, silent = true })
 
     vim.api.nvim_create_autocmd("BufWriteCmd", {
         buffer = buf,

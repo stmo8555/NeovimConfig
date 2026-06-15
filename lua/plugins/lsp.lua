@@ -6,12 +6,17 @@ vim.pack.add({
         version = "main"
     },
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+    {
+        src = 'https://github.com/saghen/blink.cmp',
+        version = "v1"
+    },
+    "https://github.com/rafamadriz/friendly-snippets",
 })
 
 require "nvim-treesitter".install({
     "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
-    "regex", "markdown", "json", "go", "javascript", "sql"
+    "regex", "markdown", "json", "go", "javascript", "sql", "yaml"
 })
 
 require "mason".setup({
@@ -22,6 +27,17 @@ require "mason".setup({
             package_uninstalled = "✗"
         }
     }
+})
+
+require 'blink.cmp'.setup({
+    fuzzy = { implementation = "prefer_rust" },
+
+    keymap = { preset = 'default' },
+    appearance = {
+        use_nvim_cmp_as_default = false,
+        nerd_font_variant = 'mono'
+    },
+    signature = { enabled = true }
 })
 
 vim.lsp.config("cssls", {})
@@ -37,6 +53,13 @@ vim.lsp.config("postgres_lsp", {
     end,
 })
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
+vim.lsp.config('*', {
+    capabilities = capabilities
+})
+
 vim.lsp.config("tsgo", {})
 
 vim.lsp.enable({
@@ -48,9 +71,11 @@ vim.lsp.enable({
     "tsgo",
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { '<filetype>' },
-    callback = function() vim.treesitter.start() end,
+
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+    end,
 })
 
 -- keymaps

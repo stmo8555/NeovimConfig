@@ -24,3 +24,15 @@ vim.o.splitbelow = true
 
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 vim.o.confirm = true
+
+-- Automatically reload files changed outside of Neovim
+vim.o.autoread = true
+vim.o.updatetime = 1000
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
