@@ -42,7 +42,14 @@ require 'blink.cmp'.setup({
 
 vim.lsp.config("cssls", {})
 vim.lsp.config("html", {})
-vim.lsp.config("gopls", {})
+vim.lsp.config("gopls", {
+  settings = {
+    gopls = {
+      usePlaceholders = true,
+      completeFunctionCalls = true,
+    },
+  },
+})
 vim.lsp.config("lua_ls", {})
 
 vim.lsp.config("postgres_lsp", {
