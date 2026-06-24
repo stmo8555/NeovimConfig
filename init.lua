@@ -20,3 +20,13 @@ vim.pack.add({ "https://github.com/junegunn/vim-peekaboo" })
 
 require("keymaps")
 require("autos")
+
+vim.keymap.set('n', '<leader>z', function()
+  if vim.g.pane_zoomed then
+    vim.cmd('wincmd =')
+    vim.g.pane_zoomed = false
+  else
+    vim.cmd('wincmd |')
+    vim.g.pane_zoomed = true
+  end
+end)

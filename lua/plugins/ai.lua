@@ -10,79 +10,30 @@ require("render-markdown").setup({
     file_types = { "markdown", "codecompanion" }
 })
 
-local models = {
-    {
-        adapter = "anthropic",
-        model = "Haiku-4.5",
-    },
-    {
-        adapter = "openai",
-        model = "gpt-5nano",
-    },
-}
-
-local current_model = 1
-
-local function active()
-    return models[current_model]
-end
-
-local setup = function()
-    require("codecompanion").setup({
-        strategies = {
-            chat = {
-                adapter = active().adapter,
-            },
-            inline = {
-                adapter = active().adapter
-            },
-            cmd = {
-                adapter = active().adapter
-            },
-        },
-
-        adapters = {
-            anthropic = function()
-                return require("codecompanion.adapters").extend("anthropic", {
-                    schema = {
-                        model = {
-                            default = active().model,
-                        },
+require("codecompanion").setup({
+    adapters = {
+        acp = {
+            claude_code = function()
+                return require("codecompanion.adapters").extend("claude_code", {
+                    commands = {
+                        default = { "claude-code-acp" },
+                        yolo = { "claude-code-acp" },
                     },
-                })
-            end,
-
-            openai = function()
-                return require("codecompanion.adapters").extend("openai", {
-                    schema = {
-                        model = {
-                            default = active().model,
-                        },
+                    env = {
+                        CLAUDE_CODE_OAUTH_TOKEN = function()
+                            return os.getenv("CLAUDE_CODE_OAUTH_TOKEN")
+                        end,
                     },
                 })
             end,
         },
-    })
-end
-
-setup()
-
-vim.api.nvim_create_user_command("ToggleAIModel", function()
-    current_model = current_model + 1
-
-    if current_model > #models then
-        current_model = 1
-    end
-
-    local m = active()
-    setup()
-    print("Current AI model: " .. m.adapter .. " / " .. m.model)
-end, {})
-
-vim.api.nvim_create_user_command("CurrentAIModel", function()
-    local m = active()
-    print("Current AI model: " .. m.adapter .. " / " .. m.model)
-end, {})
+    },
+    strategies = {
+        chat = { adapter = "claude_code" },
+        inline = { adapter = "claude_code" },
+        cmd = { adapter = "claude_code" },
+    },
+})
 
 vim.keymap.set("n", "<leader>am", "<cmd>ToggleAIModel<cr>")
 vim.keymap.set("n", "<leader>aM", "<cmd>CurrentAIModel<cr>")
@@ -121,5 +72,5 @@ vim.api.nvim_create_autocmd("User", {
     end
 })
 vim.keymap.set("n", "<leader>a", "<Nop>", {
-  desc = "Actions prefix",
+    desc = "Actions prefix",
 })
