@@ -7,7 +7,6 @@ require 'mini.surround'.setup()
 require 'mini.move'.setup()
 require "mini.indentscope".setup()
 require "mini.splitjoin".setup()
-require("mini.ai").setup()
 require("mini.extra").setup()
 
 vim.keymap.set("n", "grr", function()
@@ -27,7 +26,7 @@ vim.keymap.set("n", "<leader>da", function()
 end, { desc = "Workspace diagnostics" })
 vim.keymap.set("n", "<leader>de", function()
     vim.diagnostic.open_float(nil, {
-        scope = "cursor",
+        scope = "line",
         focus = true,
         border = "rounded",
         source = true,
