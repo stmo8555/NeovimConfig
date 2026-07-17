@@ -62,3 +62,13 @@ set("n", "N", "Nzzzv", { desc = "move down in buffer with cursor centerd" })
 
 
 set("n", "<leader>m", function() require("arena").toggle() end)
+
+vim.keymap.set('n', 'gz', function()
+  if vim.g.pane_zoomed then
+    vim.cmd('wincmd =')
+    vim.g.pane_zoomed = false
+  else
+    vim.cmd('wincmd |')
+    vim.g.pane_zoomed = true
+  end
+end)
