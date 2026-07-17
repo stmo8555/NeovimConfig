@@ -10,7 +10,6 @@ require('plugins.winshift')
 require('plugins.autotag')
 require('plugins.aerial')
 require('plugins.dap')
-require('plugins.ai')
 
 require('plugins.arena')
 require('arena').setup()
@@ -19,4 +18,5 @@ vim.pack.add({ "https://github.com/junegunn/vim-peekaboo" })
 
 
 require("keymaps")
+require("prompter")
 require("autos")
