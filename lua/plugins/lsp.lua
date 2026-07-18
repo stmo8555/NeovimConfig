@@ -16,7 +16,7 @@ vim.pack.add({
 require "nvim-treesitter".install({
     "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
-    "regex", "markdown", "json", "go", "javascript", "sql", "yaml"
+    "regex", "markdown", "json", "go", "javascript", "sql", "yaml", "asm"
 })
 
 require "mason".setup({
@@ -42,6 +42,11 @@ require 'blink.cmp'.setup({
 
 vim.lsp.config("cssls", {})
 vim.lsp.config("html", {})
+vim.lsp.config("lua_ls", {})
+vim.lsp.config("tsgo", {})
+vim.lsp.config("asm-lsp", {})
+
+
 vim.lsp.config("gopls", {
   settings = {
     gopls = {
@@ -50,7 +55,6 @@ vim.lsp.config("gopls", {
     },
   },
 })
-vim.lsp.config("lua_ls", {})
 
 vim.lsp.config("postgres_lsp", {
     cmd = { "postgres-language-server", "lsp-proxy" },
@@ -67,7 +71,6 @@ vim.lsp.config('*', {
     capabilities = capabilities
 })
 
-vim.lsp.config("tsgo", {})
 
 vim.lsp.enable({
     "cssls",
@@ -76,6 +79,7 @@ vim.lsp.enable({
     "lua_ls",
     "postgres_lsp",
     "tsgo",
+    "asm-lsp"
 })
 
 
