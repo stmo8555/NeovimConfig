@@ -44,7 +44,7 @@ vim.lsp.config("cssls", {})
 vim.lsp.config("html", {})
 vim.lsp.config("lua_ls", {})
 vim.lsp.config("tsgo", {})
-vim.lsp.config("asm-lsp", {})
+vim.lsp.config("asm_lsp", {})
 
 
 vim.lsp.config("gopls", {
@@ -79,7 +79,7 @@ vim.lsp.enable({
     "lua_ls",
     "postgres_lsp",
     "tsgo",
-    "asm-lsp"
+    "asm_lsp"
 })
 
 
