@@ -11,7 +11,10 @@ set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end)
 set('n', '<Space>', '<Nop>', opts)
 set('v', '<Space>', '<Nop>', opts)
 
-set('n', '<leader>o', ':update<CR> :source<CR>', nil)
+set('n', '<leader>o', function()
+  vim.cmd.update()
+  vim.cmd.source(vim.fn.stdpath('config') .. '/init.lua')
+end, opts)
 set('n', '<leader>w', ':write<CR>', opts)
 set('n', '<leader>q', ':q<CR>', opts)
 
