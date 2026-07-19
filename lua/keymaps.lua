@@ -13,8 +13,21 @@ set('v', '<Space>', '<Nop>', opts)
 
 set('n', '<leader>o', function()
   vim.cmd.update()
-  vim.cmd.source(vim.fn.stdpath('config') .. '/init.lua')
-  vim.api.nvim_echo({ { 'Sourced' } }, false, {})
+
+  local config = vim.fn.stdpath('config')
+  local config_lua = vim.fs.normalize(config .. '/lua')
+
+  for _, path in ipairs(vim.fn.globpath(config_lua, '**/*.lua', false, true)) do
+    local module = path:sub(#config_lua + 2, -5):gsub('/', '.')
+    package.loaded[module] = nil
+
+    if vim.endswith(module, '.init') then
+      package.loaded[module:sub(1, -6)] = nil
+    end
+  end
+
+  vim.cmd.source(config .. '/init.lua')
+  vim.api.nvim_echo({ { 'Sourced config' } }, false, {})
 end, opts)
 set('n', '<leader>w', ':write<CR>', opts)
 set('n', '<leader>q', ':q<CR>', opts)
