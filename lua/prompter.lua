@@ -36,6 +36,7 @@ local function prompt_for_note(ref)
         "FloatFooter:PrompterFooter",
     }, ",")
 
+
     local function close()
         if vim.api.nvim_win_is_valid(win) then
             vim.api.nvim_win_close(win, true)
@@ -60,7 +61,7 @@ local function prompt_for_note(ref)
 
     vim.keymap.set("n", "<CR>", submit, { buffer = buf, silent = true })
     vim.keymap.set("n", "q", close, { buffer = buf, silent = true })
-    vim.cmd("startinsert")
+    -- vim.cmd("startinsert")
 end
 
 -- Copy file path / selection reference for pasting into AI chats
