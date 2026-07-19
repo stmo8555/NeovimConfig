@@ -13,6 +13,8 @@ vim.o.swapfile = false
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 vim.o.cursorline = true
+vim.o.showmode = false
+vim.o.laststatus = 3
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
