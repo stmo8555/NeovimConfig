@@ -59,7 +59,7 @@ vim.lsp.config("gopls", {
 vim.lsp.config("clangd", {
     cmd = {
         "clangd",
-        "--fallback-style={BasedOnStyle: LLVM, ColumnLimit: 80}",
+        "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 80}",
     },
     init_options = {
         fallbackFlags = { "-Wall", "-Wextra", "-Wpedantic", "-Werror"},
