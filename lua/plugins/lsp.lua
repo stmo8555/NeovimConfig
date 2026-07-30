@@ -48,12 +48,18 @@ vim.lsp.config("asm_lsp", {})
 
 
 vim.lsp.config("gopls", {
-  settings = {
-    gopls = {
-      usePlaceholders = true,
-      completeFunctionCalls = true,
+    settings = {
+        gopls = {
+            usePlaceholders = true,
+            completeFunctionCalls = true,
+        },
     },
-  },
+})
+
+vim.lsp.config("clangd", {
+    init_options = {
+        fallbackFlags = { "-Wall", "-Wextra", "-Wpedantic", "-Werror"},
+    },
 })
 
 vim.lsp.config("postgres_lsp", {
@@ -79,7 +85,8 @@ vim.lsp.enable({
     "lua_ls",
     "postgres_lsp",
     "tsgo",
-    "asm_lsp"
+    "asm_lsp",
+    "clangd"
 })
 
 
@@ -93,8 +100,8 @@ vim.api.nvim_create_autocmd("FileType", {
 -- You can use the capture groups defined in `textobjects.scm`
 vim.keymap.set({ "x", "o" }, "af", function()
     require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
-end)
+end, { desc = "Select outer function" })
 
 vim.keymap.set({ "x", "o" }, "if", function()
     require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
-end)
+end, { desc = "Select inner function" })

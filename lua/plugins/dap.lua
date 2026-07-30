@@ -8,7 +8,7 @@ vim.pack.add({
 require("dap-go").setup()
 require("nvim-dap-virtual-text").setup()
 
-vim.keymap.set("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>")
-vim.keymap.set("n", "<leader>bt", "<cmd>DapViewToggle<cr>")
-vim.keymap.set("n", "<leader>bc", "<cmd>DapContinue<cr>")
-vim.keymap.set("n", "<leader>bw", "<cmd>DapViewWatch<cr>")
+vim.keymap.set("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle breakpoint" })
+vim.keymap.set("n", "<leader>bt", "<cmd>DapViewToggle<cr>", { desc = "Toggle debug view" })
+vim.keymap.set("n", "<leader>bc", "<cmd>DapContinue<cr>", { desc = "Continue debugging" })
+vim.keymap.set("n", "<leader>bw", "<cmd>DapViewWatch<cr>", { desc = "Open debug watches" })

@@ -31,10 +31,10 @@ function M.rename()
         end
     end
 
-    vim.keymap.set("n", "q", close, { buffer = buf, silent = true })
-    vim.keymap.set("n", "<Esc>", close, { buffer = buf, silent = true })
-    vim.keymap.set("n", "<CR>", "<cmd>write<CR>", { buffer = buf, silent = true })
-    vim.keymap.set("i", "<CR>", "<Nop>", { buffer = buf, silent = true })
+    vim.keymap.set("n", "q", close, { buffer = buf, silent = true, desc = "Cancel rename" })
+    vim.keymap.set("n", "<Esc>", close, { buffer = buf, silent = true, desc = "Cancel rename" })
+    vim.keymap.set("n", "<CR>", "<cmd>write<CR>", { buffer = buf, silent = true, desc = "Confirm rename" })
+    vim.keymap.set("i", "<CR>", "<Nop>", { buffer = buf, silent = true, desc = "Use normal mode to confirm rename" })
 
     vim.api.nvim_create_autocmd("BufWriteCmd", {
         buffer = buf,
