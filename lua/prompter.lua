@@ -61,7 +61,7 @@ local function prompt_for_note(ref)
 
     vim.keymap.set("n", "<CR>", submit, { buffer = buf, silent = true, desc = "Copy prompt reference" })
     vim.keymap.set("n", "q", close, { buffer = buf, silent = true, desc = "Cancel prompt" })
-    -- vim.cmd("startinsert")
+    vim.cmd("startinsert")
 end
 
 -- Copy file path / selection reference for pasting into AI chats
@@ -76,28 +76,28 @@ local function copy_ref(opts)
             start_line, end_line = end_line, start_line
         end
         ref = path .. ":" .. start_line .. ":" .. end_line
-        vim.cmd("normal! <Esc>")
+        vim.cmd("normal! \27")
     end
 
     prompt_for_note(ref)
 end
 
 -- normal mode: copy the relative file path
-vim.keymap.set("n", "<leader>cr", function()
+vim.keymap.set("n", "<leader>cp", function()
     copy_ref({})
 end, { desc = "Copy relative file path" })
 
 -- visual mode: copy the relative file path plus the selected line range
-vim.keymap.set("v", "<leader>cr", function()
+vim.keymap.set("v", "<leader>cp", function()
     copy_ref({ visual = true })
 end, { desc = "Copy relative file path with line range" })
 
 -- normal mode: copy the full file path
-vim.keymap.set("n", "<leader>cf", function()
+vim.keymap.set("n", "<leader>cP", function()
     copy_ref({ full_path = true })
 end, { desc = "Copy full file path" })
 
 -- visual mode: copy the full file path plus the selected line range
-vim.keymap.set("v", "<leader>cf", function()
+vim.keymap.set("v", "<leader>cP", function()
     copy_ref({ visual = true, full_path = true })
 end, { desc = "Copy full file path with line range" })
