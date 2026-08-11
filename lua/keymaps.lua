@@ -11,22 +11,22 @@ set('n', '<Space>', '<Nop>', { silent = true, desc = 'Disable Space key' })
 set('v', '<Space>', '<Nop>', { silent = true, desc = 'Disable Space key' })
 
 set('n', '<leader>o', function()
-  vim.cmd.update()
+    vim.cmd.update()
 
-  local config = vim.fn.stdpath('config')
-  local config_lua = vim.fs.normalize(config .. '/lua')
+    local config = vim.fn.stdpath('config')
+    local config_lua = vim.fs.normalize(config .. '/lua')
 
-  for _, path in ipairs(vim.fn.globpath(config_lua, '**/*.lua', false, true)) do
-    local module = path:sub(#config_lua + 2, -5):gsub('/', '.')
-    package.loaded[module] = nil
+    for _, path in ipairs(vim.fn.globpath(config_lua, '**/*.lua', false, true)) do
+        local module = path:sub(#config_lua + 2, -5):gsub('/', '.')
+        package.loaded[module] = nil
 
-    if vim.endswith(module, '.init') then
-      package.loaded[module:sub(1, -6)] = nil
+        if vim.endswith(module, '.init') then
+            package.loaded[module:sub(1, -6)] = nil
+        end
     end
-  end
 
-  vim.cmd.source(config .. '/init.lua')
-  vim.api.nvim_echo({ { 'Sourced config' } }, false, {})
+    vim.cmd.source(config .. '/init.lua')
+    vim.api.nvim_echo({ { 'Sourced config' } }, false, {})
 end, { silent = true, desc = 'Reload Neovim configuration' })
 set('n', '<leader>w', ':write<CR>', { silent = true, desc = 'Write current buffer' })
 set('n', '<leader>q', ':q<CR>', { silent = true, desc = 'Quit current window' })
@@ -53,7 +53,7 @@ set("n", "<leader>fl",
     function() MiniPick.builtin.files({}, { source = { cwd = vim.fn.expand('%:p:h') }, }) end,
     { desc = "Pick files locally" })
 set('n', '<leader>fc', function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end,
-  { silent = true, desc = 'Grep word under cursor' })
+    { silent = true, desc = 'Grep word under cursor' })
 
 set('n', '<leader>e', ':Oil<CR>', { silent = true, desc = 'Open file explorer' })
 
@@ -81,11 +81,11 @@ set("n", "N", "Nzzzv", { desc = "Previous search result and center cursor" })
 set("n", "<leader>m", function() require("arena").toggle() end, { desc = "Toggle Arena" })
 
 vim.keymap.set('n', 'gz', function()
-  if vim.g.pane_zoomed then
-    vim.cmd('wincmd =')
-    vim.g.pane_zoomed = false
-  else
-    vim.cmd('wincmd |')
-    vim.g.pane_zoomed = true
-  end
+    if vim.g.pane_zoomed then
+        vim.cmd('wincmd =')
+        vim.g.pane_zoomed = false
+    else
+        vim.cmd('wincmd |')
+        vim.g.pane_zoomed = true
+    end
 end, { desc = 'Toggle window zoom' })
