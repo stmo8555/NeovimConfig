@@ -13,6 +13,31 @@ vim.pack.add({
     "https://github.com/rafamadriz/friendly-snippets",
 })
 
+require('blink.cmp').setup({
+  fuzzy = { implementation = "prefer_rust" },
+
+  keymap = { preset = 'default' },
+
+  appearance = {
+    use_nvim_cmp_as_default = false,
+    nerd_font_variant = 'mono',
+  },
+
+  completion = {
+    menu = {
+      draw = {
+        columns = {
+          { "label", "label_description", gap = 1 },
+          { "kind" },
+          { "source_name" },
+        },
+      },
+    },
+  },
+
+  signature = { enabled = true },
+})
+
 require "nvim-treesitter".install({
     "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
@@ -29,23 +54,43 @@ require "mason".setup({
     }
 })
 
-require 'blink.cmp'.setup({
-    fuzzy = { implementation = "prefer_rust" },
+local lsps = {
+    "cssls",
+    "html",
+    "gopls",
+    "lua_ls",
+    "postgres_lsp",
+    "tsgo",
+    "asm_lsp",
+    "clangd",
+}
 
-    keymap = { preset = 'default' },
-    appearance = {
-        use_nvim_cmp_as_default = false,
-        nerd_font_variant = 'mono'
-    },
-    signature = { enabled = true }
-})
+local mason_packages = {
+    "css-lsp",
+    "html-lsp",
+    "gopls",
+    "lua-language-server",
+    "postgres-language-server",
+    "tsgo",
+    "asm-lsp",
+    "clangd",
+}
 
-vim.lsp.config("cssls", {})
-vim.lsp.config("html", {})
-vim.lsp.config("lua_ls", {})
-vim.lsp.config("tsgo", {})
-vim.lsp.config("asm_lsp", {})
+local registry = require "mason-registry"
 
+registry.refresh(function(success)
+    if not success then
+        return
+    end
+
+    for _, package_name in ipairs(mason_packages) do
+        local package = registry.get_package(package_name)
+        if not package:is_installed() or package:get_installed_version() ~= package:get_latest_version() then
+            vim.notify("Installing " .. package_name)
+            package:install()
+        end
+    end
+end)
 
 vim.lsp.config("gopls", {
     settings = {
@@ -59,10 +104,12 @@ vim.lsp.config("gopls", {
 vim.lsp.config("clangd", {
     cmd = {
         "clangd",
+        "--query-driver=/usr/bin/arm-none-eabi-g++",
+        "--compile-commands-dir=build",
         "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 80}",
     },
     init_options = {
-        fallbackFlags = { "-Wall", "-Wextra", "-Wpedantic", "-Werror"},
+        fallbackFlags = { "-std=c++20", "-Wall", "-Wextra", "-Wpedantic", "-Werror" },
     },
 })
 
@@ -82,16 +129,7 @@ vim.lsp.config('*', {
 })
 
 
-vim.lsp.enable({
-    "cssls",
-    "html",
-    "gopls",
-    "lua_ls",
-    "postgres_lsp",
-    "tsgo",
-    "asm_lsp",
-    "clangd"
-})
+vim.lsp.enable(lsps)
 
 
 vim.api.nvim_create_autocmd("FileType", {
