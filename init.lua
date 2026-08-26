@@ -10,6 +10,7 @@ require('plugins.winshift')
 require('plugins.autotag')
 require('plugins.aerial')
 require('plugins.dap')
+require('plugins.undotree')
 
 require('plugins.arena')
 require('arena').setup()

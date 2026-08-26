@@ -39,7 +39,7 @@ require('blink.cmp').setup({
 })
 
 require "nvim-treesitter".install({
-    "html", "css", "c", "cpp",
+    "cmake", "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
     "regex", "markdown", "json", "go", "javascript", "sql", "yaml", "asm"
 })
@@ -63,6 +63,7 @@ local lsps = {
     "tsgo",
     "asm_lsp",
     "clangd",
+    "neocmake"
 }
 
 local mason_packages = {
@@ -104,8 +105,12 @@ vim.lsp.config("gopls", {
 vim.lsp.config("clangd", {
     cmd = {
         "clangd",
-        "--query-driver=/usr/bin/arm-none-eabi-g++",
-        "--compile-commands-dir=build",
+        -- glob, not g++: pico C sources are built with arm-none-eabi-gcc, and
+        
+        -- clangd only queries drivers this pattern matches
+        "--query-driver=/usr/bin/arm-none-eabi-*",
+        -- no --compile-commands-dir: clangd searches upward from each file, so
+        -- nested projects each find their own compile_commands.json
         "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 80}",
     },
     init_options = {
