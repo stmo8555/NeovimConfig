@@ -145,6 +145,13 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition,
+            { buffer = args.buf, desc = "LSP go to definition" })
+    end,
+})
+
 -- keymaps
 -- You can use the capture groups defined in `textobjects.scm`
 vim.keymap.set({ "x", "o" }, "af", function()
