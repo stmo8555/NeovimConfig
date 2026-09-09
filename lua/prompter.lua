@@ -154,9 +154,9 @@ local function ask_claude(permission_mode, system_prompt)
         "--model",
         models[1],
     }, { term = true })
-    vim.cmd("startinsert")
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
 end
+
 
 vim.keymap.set("n", "<leader>ca", function()
     ask_claude("default", QUICK_ANSWER_SYSTEM_PROMPT)

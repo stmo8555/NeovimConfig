@@ -14,28 +14,28 @@ vim.pack.add({
 })
 
 require('blink.cmp').setup({
-  fuzzy = { implementation = "prefer_rust" },
+    fuzzy = { implementation = "prefer_rust" },
 
-  keymap = { preset = 'default' },
+    keymap = { preset = 'default' },
 
-  appearance = {
-    use_nvim_cmp_as_default = false,
-    nerd_font_variant = 'mono',
-  },
-
-  completion = {
-    menu = {
-      draw = {
-        columns = {
-          { "label", "label_description", gap = 1 },
-          { "kind" },
-          { "source_name" },
-        },
-      },
+    appearance = {
+        use_nvim_cmp_as_default = false,
+        nerd_font_variant = 'mono',
     },
-  },
 
-  signature = { enabled = true },
+    completion = {
+        menu = {
+            draw = {
+                columns = {
+                    { "label",      "label_description", gap = 1 },
+                    { "kind" },
+                    { "source_name" },
+                },
+            },
+        },
+    },
+
+    signature = { enabled = true },
 })
 
 require "nvim-treesitter".install({
@@ -63,12 +63,14 @@ local lsps = {
     "tsgo",
     "asm_lsp",
     "clangd",
-    "neocmake"
+    "neocmake",
+    "jsonls",
 }
 
 local mason_packages = {
     "css-lsp",
     "html-lsp",
+    "json-lsp",
     "gopls",
     "lua-language-server",
     "postgres-language-server",
@@ -106,7 +108,7 @@ vim.lsp.config("clangd", {
     cmd = {
         "clangd",
         -- glob, not g++: pico C sources are built with arm-none-eabi-gcc, and
-        
+
         -- clangd only queries drivers this pattern matches
         "--query-driver=/usr/bin/arm-none-eabi-*",
         -- no --compile-commands-dir: clangd searches upward from each file, so
