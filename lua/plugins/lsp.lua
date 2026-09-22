@@ -11,6 +11,7 @@ vim.pack.add({
         version = "v1"
     },
     "https://github.com/rafamadriz/friendly-snippets",
+    "https://github.com/JavaHello/spring-boot.nvim"
 })
 
 require('blink.cmp').setup({
@@ -41,7 +42,7 @@ require('blink.cmp').setup({
 require "nvim-treesitter".install({
     "cmake", "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
-    "regex", "markdown", "json", "go", "javascript", "sql", "yaml", "asm"
+    "regex", "markdown", "json", "go", "javascript", "sql", "yaml", "asm", "java"
 })
 
 require "mason".setup({
@@ -65,6 +66,7 @@ local lsps = {
     "clangd",
     "neocmake",
     "jsonls",
+    "jdtls",
 }
 
 local mason_packages = {
@@ -77,6 +79,8 @@ local mason_packages = {
     "tsgo",
     "asm-lsp",
     "clangd",
+    "jdtls",
+    "vscode-spring-boot-tools",
 }
 
 local registry = require "mason-registry"
@@ -104,6 +108,23 @@ vim.lsp.config("gopls", {
     },
 })
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
+require('spring_boot').setup({
+    server = {
+        capabilities = capabilities,
+    },
+})
+
+vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
+
+vim.lsp.config("jdtls", {
+    init_options = {
+        bundles = require("spring_boot").java_extensions(),
+    },
+})
+
 vim.lsp.config("clangd", {
     cmd = {
         "clangd",
@@ -128,9 +149,6 @@ vim.lsp.config("postgres_lsp", {
     end,
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-
 vim.lsp.config('*', {
     capabilities = capabilities
 })
@@ -149,6 +167,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition,
             { buffer = args.buf, desc = "LSP go to definition" })
+
+        if vim.bo[args.buf].filetype == "java" then
+            vim.api.nvim_buf_create_user_command(args.buf, "JavaCleanWorkspace", function()
+                vim.lsp.buf.execute_command({ command = "java.clean.workspace" })
+            end, { desc = "Clean jdtls workspace" })
+        end
     end,
 })
 

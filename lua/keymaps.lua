@@ -4,6 +4,7 @@ local set = vim.keymap.set
 set('i', '<C-u>', '<Nop>', { silent = true, desc = 'Disable insert-mode delete to line start' })
 set('n', '<Esc>', '<cmd>nohlsearch<CR>', { silent = true, desc = 'Clear search highlight' })
 
+-- maybe remove
 set("n", "<C-j>", function() vim.fn.append(vim.fn.line("."), "") end, { desc = "Insert blank line below" })
 set("n", "<C-k>", function() vim.fn.append(vim.fn.line(".") - 1, "") end, { desc = "Insert blank line above" })
 
@@ -52,6 +53,13 @@ set("n", "<leader>fn",
 set("n", "<leader>fl",
     function() MiniPick.builtin.files({}, { source = { cwd = vim.fn.expand('%:p:h') }, }) end,
     { desc = "Pick files locally" })
+set("n", "<leader>fd", function()
+    vim.fn["fzf#run"](vim.fn["fzf#wrap"]({
+        source = [[find . \( -path '*/.git' -o -path '*/target' -o -path '*/build' ]] ..
+            [[-o -path '*/node_modules' -o -path '*/.idea' -o -path '*/out' \) -prune -o -type d -print]],
+        sink = function(dir) require("oil").open(dir) end,
+    }))
+end, { desc = "Find directory (fzf, open in Oil)" })
 set('n', '<leader>fc', function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end,
     { silent = true, desc = 'Grep word under cursor' })
 
