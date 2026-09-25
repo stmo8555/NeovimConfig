@@ -2,7 +2,22 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.nvim.git" })
 
 require "mini.icons".setup()
 require "mini.statusline".setup({ use_icons = true })
-require "mini.pick".setup()
+require "mini.pick".setup({
+    window = {
+        -- Centered on screen
+        config = function()
+            local height = math.floor(0.618 * vim.o.lines)
+            local width = math.floor(0.85 * vim.o.columns)
+            return {
+                anchor = "NW",
+                height = height,
+                width = width,
+                row = math.floor(0.5 * (vim.o.lines - height)),
+                col = math.floor(0.5 * (vim.o.columns - width)),
+            }
+        end,
+    },
+})
 require 'mini.surround'.setup()
 require 'mini.move'.setup()
 require "mini.indentscope".setup()
