@@ -143,7 +143,24 @@ local function ask_claude(permission_mode, system_prompt)
     vim.cmd("vsplit")
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_win_set_buf(0, buf)
-    vim.fn.jobstart({
+    vim.wo[0][0].wrap = true
+    vim.wo[0][0].linebreak = true
+    vim.bo[buf].filetype = "markdown"
+    vim.bo[buf].bufhidden = "wipe"
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "_Thinking..._" })
+
+    -- job output arrives in chunks; the first item of each chunk continues the last line
+    local lines = { "" }
+    local function append(_, data)
+        if not vim.api.nvim_buf_is_valid(buf) then
+            return
+        end
+        lines[#lines] = lines[#lines] .. data[1]
+        vim.list_extend(lines, data, 2)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    end
+
+    local job = vim.fn.jobstart({
         "claude",
         "-p",
         q,
@@ -153,7 +170,22 @@ local function ask_claude(permission_mode, system_prompt)
         system_prompt,
         "--model",
         models[1],
-    }, { term = true })
+    }, {
+        stdin = "null",
+        on_stdout = append,
+        on_stderr = append,
+        on_exit = function()
+            -- pick up edits made by the fix assistant
+            vim.cmd("checktime")
+        end,
+    })
+    vim.api.nvim_create_autocmd("BufWipeout", {
+        buffer = buf,
+        once = true,
+        callback = function()
+            vim.fn.jobstop(job)
+        end,
+    })
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
 end
 
