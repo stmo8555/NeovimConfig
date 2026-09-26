@@ -1,6 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+
 vim.o.winborder = "rounded"
 vim.o.number = true
 vim.o.signcolumn = 'yes'
@@ -8,6 +9,7 @@ vim.o.relativenumber = true
 vim.o.wrap = false
 vim.o.shiftwidth = 4
 vim.o.tabstop = 4
+-- vim.o.softtabstop = 2
 vim.o.expandtab = true
 vim.o.swapfile = false
 vim.o.undofile = true

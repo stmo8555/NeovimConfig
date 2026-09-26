@@ -29,6 +29,7 @@ set('n', '<leader>o', function()
     vim.cmd.source(config .. '/init.lua')
     vim.api.nvim_echo({ { 'Sourced config' } }, false, {})
 end, { silent = true, desc = 'Reload Neovim configuration' })
+
 set('n', '<leader>w', ':write<CR>', { silent = true, desc = 'Write current buffer' })
 set('n', '<leader>q', ':q<CR>', { silent = true, desc = 'Quit current window' })
 
@@ -42,51 +43,13 @@ set('n', '<C-Right>', ':vertical resize +5<CR>', { silent = true, desc = 'Increa
 
 set("n", "grn", function() require("plugins.rename_float").rename() end, { desc = "LSP rename float" })
 
-local MiniPick = require("mini.pick")
-
-set('n', '<leader>ff', ':Pick files<CR>', { silent = true, desc = 'Find files' })
-set('n', '<leader>fh', ':Pick help<CR>', { silent = true, desc = 'Find help' })
-set('n', '<leader>fg', ':Pick grep_live<CR>', { silent = true, desc = 'Live grep' })
-set("n", "<leader>fn",
-    function() MiniPick.builtin.files({}, { source = { cwd = vim.fn.stdpath("config"), }, }) end,
-    { desc = "Pick files from Neovim config" })
-set("n", "<leader>fl",
-    function() MiniPick.builtin.files({}, { source = { cwd = vim.fn.expand('%:p:h') }, }) end,
-    { desc = "Pick files locally" })
-set("n", "<leader>fd", function()
-    vim.fn["fzf#run"](vim.fn["fzf#wrap"]({
-        source = [[find . \( -path '*/.git' -o -path '*/target' -o -path '*/build' ]] ..
-            [[-o -path '*/node_modules' -o -path '*/.idea' -o -path '*/out' \) -prune -o -type d -print]],
-        sink = function(dir) require("oil").open(dir) end,
-    }))
-end, { desc = "Find directory (fzf, open in Oil)" })
-set('n', '<leader>fc', function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end,
-    { silent = true, desc = 'Grep word under cursor' })
-
-set('n', '<leader>e', ':Oil<CR>', { silent = true, desc = 'Open file explorer' })
-
 set('n', '<leader>lf', vim.lsp.buf.format, { desc = 'Format buffer' })
 
---" Start Win-Move mode:
-set('n', '<C-W>m', '<Cmd>WinShift<CR>', { silent = true, desc = 'Enter window move mode' })
-
---" Swap two windows:
-set('n', '<C-W>X', '<Cmd>WinShift swap<CR>', { desc = 'Swap windows' })
-
---" If you don't want to use Win-Move mode you can create mappings for calling the
---" move commands directly:
---set('n', '<C-M>h', '<Cmd>WinShift left<CR>')
---set('n', '<C-M>j', '<Cmd>WinShift down<CR>')
---set('n', '<C-M>k', '<Cmd>WinShift up<CR>')
---set('n', '<C-M>l', '<Cmd>WinShift right<CR>')
 set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center cursor" })
 set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center cursor" })
 
 set("n", "n", "nzzzv", { desc = "Next search result and center cursor" })
 set("n", "N", "Nzzzv", { desc = "Previous search result and center cursor" })
-
-
-set("n", "<leader>m", function() require("arena").toggle() end, { desc = "Toggle Arena" })
 
 vim.keymap.set('n', 'gz', function()
     if vim.g.pane_zoomed then
@@ -97,3 +60,17 @@ vim.keymap.set('n', 'gz', function()
         vim.g.pane_zoomed = true
     end
 end, { desc = 'Toggle window zoom' })
+
+vim.keymap.set("n", "<leader>de", function()
+    vim.diagnostic.open_float(nil, {
+        scope = "line",
+        focus = true,
+        border = "rounded",
+        source = true,
+    })
+end, { desc = "Show diagnostic details" })
+
+vim.keymap.set("n", "<leader>dd", function()
+	vim.diagnostic.setqflist()
+	vim.cmd("copen")
+end, { silent = true })
