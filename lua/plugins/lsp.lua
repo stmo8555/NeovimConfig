@@ -28,8 +28,9 @@ require('blink.cmp').setup({
         menu = {
             draw = {
                 columns = {
-                    { "label",      "label_description", gap = 1 },
-                    { "kind" },
+                    { "label" },
+                    -- { "label",      "label_description", gap = 1 },
+                    -- { "kind" },
                     { "source_name" },
                 },
             },
@@ -108,6 +109,14 @@ vim.lsp.config("gopls", {
     },
 })
 
+vim.lsp.config.thymeleaf_ls = {
+    cmd = { "thymeleaf_ls" },
+    filetypes = { "html" },
+    root_markers = { "pom.xml", "build.gradle", "build.gradle.kts", ".git" },
+}
+
+vim.lsp.enable("thymeleaf_ls")
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
@@ -163,21 +172,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition,
-            { buffer = args.buf, desc = "LSP go to definition" })
-
-        if vim.bo[args.buf].filetype == "java" then
-            vim.api.nvim_buf_create_user_command(args.buf, "JavaCleanWorkspace", function()
-                vim.lsp.buf.execute_command({ command = "java.clean.workspace" })
-            end, { desc = "Clean jdtls workspace" })
-        end
-    end,
-})
-
--- keymaps
--- You can use the capture groups defined in `textobjects.scm`
 vim.keymap.set({ "x", "o" }, "af", function()
     require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
 end, { desc = "Select outer function" })

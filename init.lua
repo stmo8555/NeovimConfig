@@ -1,7 +1,6 @@
 require("vim._core.ui2").enable({})
 require("options")
 
-require('plugins.vague')
 require('plugins.oil')
 require('plugins.mini')
 require('plugins.lsp')
@@ -21,3 +20,5 @@ vim.pack.add({ "https://github.com/junegunn/vim-peekaboo" })
 require("keymaps")
 require("prompter")
 require("autos")
+
+vim.cmd.colorscheme('catppuccin')

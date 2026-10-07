@@ -18,6 +18,8 @@ require "mini.pick".setup({
         end,
     },
 })
+
+
 require 'mini.surround'.setup()
 require 'mini.move'.setup()
 require "mini.indentscope".setup()
@@ -57,6 +59,7 @@ vim.keymap.set("n", "<leader>da", function()
         scope = "all",
     })
 end, { desc = "Workspace diagnostics" })
+
 vim.keymap.set("n", "<leader>de", function()
     vim.diagnostic.open_float(nil, {
         scope = "line",

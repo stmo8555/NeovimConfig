@@ -60,8 +60,6 @@ set("n", "<leader>fd", function()
         sink = function(dir) require("oil").open(dir) end,
     }))
 end, { desc = "Find directory (fzf, open in Oil)" })
-set('n', '<leader>fc', function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end,
-    { silent = true, desc = 'Grep word under cursor' })
 
 set('n', '<leader>e', ':Oil<CR>', { silent = true, desc = 'Open file explorer' })
 
