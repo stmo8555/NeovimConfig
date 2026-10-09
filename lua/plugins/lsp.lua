@@ -77,11 +77,12 @@ local mason_packages = {
     "gopls",
     "lua-language-server",
     "postgres-language-server",
-    "tsgo",
+    "typescript-language-server",
     "asm-lsp",
     "clangd",
     "jdtls",
     "vscode-spring-boot-tools",
+    "htmx-lsp",
 }
 
 local registry = require "mason-registry"
