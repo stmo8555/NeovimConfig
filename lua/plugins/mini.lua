@@ -28,17 +28,13 @@ require "mini.extra".setup()
 require "mini.sessions".setup({ autoread = true, })
 require "mini.notify".setup()
 
--- jdtls fires nonstop $/progress updates while indexing/building; mini.notify
--- reads its lsp_progress.enable setting live on every event, so just flip it
--- off while focused on a java buffer instead of touching LSP handlers.
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function(args)
-        local ok, notify = pcall(require, "mini.notify")
-        if ok then
-            notify.config.lsp_progress.enable = vim.bo[args.buf].filetype ~= "java"
-        end
-    end,
-})
+vim.keymap.set("n", "<leader>nc", function()
+    require("mini.notify").clear()
+end, { desc = "Clear notifications" })
+
+vim.keymap.set("n", "<leader>nh", function()
+    require("mini.notify").show_history()
+end, { desc = "Notification history" })
 
 vim.keymap.set("n", "<leader>ss", function()
     require("mini.sessions").write("Session.vim")

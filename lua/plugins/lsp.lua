@@ -11,7 +11,6 @@ vim.pack.add({
         version = "v1"
     },
     "https://github.com/rafamadriz/friendly-snippets",
-    "https://github.com/JavaHello/spring-boot.nvim"
 })
 
 require('blink.cmp').setup({
@@ -43,7 +42,7 @@ require('blink.cmp').setup({
 require "nvim-treesitter".install({
     "cmake", "html", "css", "c", "cpp",
     "python", "lua", "vim", "bash",
-    "regex", "markdown", "json", "go", "javascript", "sql", "yaml", "asm", "java"
+    "regex", "markdown", "json", "go", "javascript", "sql", "yaml", "asm"
 })
 
 require "mason".setup({
@@ -67,7 +66,6 @@ local lsps = {
     "clangd",
     "neocmake",
     "jsonls",
-    "jdtls",
 }
 
 local mason_packages = {
@@ -80,26 +78,28 @@ local mason_packages = {
     "typescript-language-server",
     "asm-lsp",
     "clangd",
-    "jdtls",
-    "vscode-spring-boot-tools",
     "htmx-lsp",
 }
 
 local registry = require "mason-registry"
 
-registry.refresh(function(success)
-    if not success then
-        return
-    end
-
-    for _, package_name in ipairs(mason_packages) do
-        local package = registry.get_package(package_name)
-        if not package:is_installed() or package:get_installed_version() ~= package:get_latest_version() then
-            vim.notify("Installing " .. package_name)
-            package:install()
+local function mason_install(packages)
+    registry.refresh(function(success)
+        if not success then
+            return
         end
-    end
-end)
+
+        for _, package_name in ipairs(packages) do
+            local package = registry.get_package(package_name)
+            if not package:is_installed() or package:get_installed_version() ~= package:get_latest_version() then
+                vim.notify("Installing " .. package_name)
+                package:install()
+            end
+        end
+    end)
+end
+
+mason_install(mason_packages)
 
 vim.lsp.config("gopls", {
     settings = {
@@ -110,30 +110,8 @@ vim.lsp.config("gopls", {
     },
 })
 
-vim.lsp.config.thymeleaf_ls = {
-    cmd = { "thymeleaf_ls" },
-    filetypes = { "html" },
-    root_markers = { "pom.xml", "build.gradle", "build.gradle.kts", ".git" },
-}
-
-vim.lsp.enable("thymeleaf_ls")
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-
-require('spring_boot').setup({
-    server = {
-        capabilities = capabilities,
-    },
-})
-
-vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
-
-vim.lsp.config("jdtls", {
-    init_options = {
-        bundles = require("spring_boot").java_extensions(),
-    },
-})
 
 vim.lsp.config("clangd", {
     cmd = {
@@ -180,3 +158,8 @@ end, { desc = "Select outer function" })
 vim.keymap.set({ "x", "o" }, "if", function()
     require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
 end, { desc = "Select inner function" })
+
+return {
+    mason_install = mason_install,
+    capabilities = capabilities,
+}
