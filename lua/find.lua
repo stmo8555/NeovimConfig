@@ -29,7 +29,6 @@ function _G.native_find(text, _)
 end
 vim.opt.findfunc = "v:lua.native_find"
 
-vim.keymap.set("n", "<leader>ff", ":find ", { silent = false })
 
 -- Fuzzy file picker: lists every project file, filters as you type
 local skip_dirs = {
@@ -134,4 +133,6 @@ local function pick_files()
 	vim.cmd.startinsert()
 end
 
-vim.keymap.set("n", "<leader>fp", pick_files, { desc = "Fuzzy find project file" })
+vim.keymap.set("n", "<leader>ff", pick_files, { desc = "Fuzzy find project file" })
+
+return { list_files = list_files }
