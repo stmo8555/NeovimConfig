@@ -49,7 +49,7 @@ end
 
 local objects = {
     af = 'function.outer',
-    ['if'] = 'function.inner',
+    ["if"] = 'function.inner',
     ai = 'block.outer',
     ii = 'block.inner',
 }

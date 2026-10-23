@@ -1,5 +1,5 @@
 -- lsp
-vim.lsp.enable({ "lua_ls", "tsgo" })
+vim.lsp.enable({ "lua_ls", "ada_ls" })
 vim.diagnostic.config({ virtual_text = true })
 
 vim.api.nvim_create_autocmd("LspAttach", {
