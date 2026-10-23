@@ -19,4 +19,11 @@ require("diagnostics")
 require("formatting")
 require("textobjects")
 
+vim.filetype.add({ extension = { gpr = "gpr" } })
+-- keep Ada syntax highlighting for project files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gpr",
+  callback = function() vim.bo.syntax = "ada" end,
+})
+
 vim.lsp.enable({"ada_ls", "lua_ls"})
