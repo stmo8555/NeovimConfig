@@ -22,10 +22,14 @@
 return {
   cmd = { 'ada_language_server' },
   filetypes = { 'ada' },
+  -- ALS only offers "Generate Package Body" if the client advertises
+  -- documentChanges (it needs it to create the .adb), and Neovim 0.12 doesn't.
+  capabilities = { workspace = { workspaceEdit = { documentChanges = true } } },
   root_dir = function(bufnr, on_dir)
+    -- prefer Ada project files or .git; fall back to Makefile
     on_dir(vim.fs.root(bufnr, function(name)
-      return name == 'Makefile' or name == '.git' or name == 'alire.toml'
+      return name == '.git' or name == 'alire.toml'
         or name:match('%.gpr$') ~= nil or name:match('%.adc$') ~= nil
-    end))
+    end) or vim.fs.root(bufnr, 'Makefile'))
   end,
 }

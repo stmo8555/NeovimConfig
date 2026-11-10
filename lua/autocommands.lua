@@ -51,19 +51,6 @@ auto('BufLeave', {
 auto('VimResized', { command = 'wincmd =' })
 auto('FileType', { pattern = 'help', command = 'wincmd L', })
 
-auto('LspAttach', {
-    group = vim.api.nvim_create_augroup('my.lsp', {}),
-    callback = function(args)
-        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-
-        if client:supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client.id, args.buf, {autotrigger = true})
-        end
-    end,
-    })
-
-vim.cmd("set completeopt+=noselect")
-
 auto('FileType', {
     desc = 'Start treesitter highlighting when a parser is available',
     group = vim.api.nvim_create_augroup('treesitter_start', {}),

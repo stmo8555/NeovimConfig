@@ -6,6 +6,7 @@ local ignore_patterns = {
 	"build",
 	"%.tmp",
 	"%.log",
+   "obj/",
 }
 
 function _G.native_find(text, _)
@@ -37,6 +38,9 @@ local skip_dirs = {
 	[".cache"] = true,
 	["dist"] = true,
 	["build"] = true,
+	["obj"] = true,
+	[".undo"] = true,
+	["alire"] = true,
 }
 
 local function list_files()
@@ -109,11 +113,11 @@ local function pick_files()
 		pcall(vim.api.nvim_buf_delete, res_buf, { force = true })
 	end
 
-	local function open()
+	local function open(cmd)
 		local file = matches[selected]
 		close()
 		if file then
-			vim.cmd.edit(vim.fn.fnameescape(file))
+			vim.cmd[cmd or "edit"](vim.fn.fnameescape(file))
 		end
 	end
 
@@ -121,7 +125,8 @@ local function pick_files()
 	vim.api.nvim_create_autocmd("WinLeave", { buffer = in_buf, once = true, callback = close })
 
 	local opts = { buffer = in_buf, nowait = true }
-	vim.keymap.set("i", "<CR>", open, opts)
+	vim.keymap.set("i", "<CR>", function() open("edit") end, opts)
+	vim.keymap.set("i", "<C-v>", function() open("vsplit") end, opts)
 	vim.keymap.set("i", "<C-n>", function() move(1) end, opts)
 	vim.keymap.set("i", "<Down>", function() move(1) end, opts)
 	vim.keymap.set("i", "<C-p>", function() move(-1) end, opts)

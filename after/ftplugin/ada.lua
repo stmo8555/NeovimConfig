@@ -3,3 +3,5 @@
 for _, lhs in ipairs({ '<leader>al', '<leader>aj' }) do
     pcall(vim.keymap.del, 'i', lhs, { buffer = 0 })
 end
+
+vim.opt_local.makeprg = "gprbuild"

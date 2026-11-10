@@ -74,3 +74,5 @@ vim.keymap.set("n", "<leader>dd", function()
 	vim.diagnostic.setqflist()
 	vim.cmd("copen")
 end, { silent = true })
+
+vim.keymap.set({ 'n', 'v', 'x' }, 'D', '"_d', { silent = true, desc = 'Delete without yanking' })

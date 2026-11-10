@@ -2,6 +2,7 @@ require("vim._core.ui2").enable({})
 require("options")
 
 require('plugins.undotree')
+require('plugins.move')
 require('colorscheme')
 
 require("keymaps")
@@ -25,5 +26,3 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "gpr",
   callback = function() vim.bo.syntax = "ada" end,
 })
-
-vim.lsp.enable({"ada_ls", "lua_ls"})
